@@ -9,6 +9,10 @@
 #    nopasswd: yes
 #  - name: '%group2'
 #    commands: '/bin/ls'
+#  - name: '%group3'
+#    commands:
+#      - /bin/ls
+#      - /bin/df
 #
 
 # package name (version)
@@ -19,3 +23,5 @@ sudo_users: []
 sudo_defaults: []
 # default sudoers file
 sudo_sudoers_file: ansible
+# delete other files in /etc/sudoers.d/
+purge_other_sudoers_files: no

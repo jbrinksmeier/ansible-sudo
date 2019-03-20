@@ -1,38 +1,42 @@
-# Ansible franklinkim.sudo role
+# Ansible weareinteractive.sudo role
 
 [![Build Status](https://img.shields.io/travis/weareinteractive/ansible-sudo.svg)](https://travis-ci.org/weareinteractive/ansible-sudo)
-[![Galaxy](http://img.shields.io/badge/galaxy-franklinkim.sudo-blue.svg)](https://galaxy.ansible.com/list#/roles/1380)
+[![Galaxy](http://img.shields.io/badge/galaxy-weareinteractive.sudo-blue.svg)](https://galaxy.ansible.com/weareinteractive/users)
 [![GitHub Tags](https://img.shields.io/github/tag/weareinteractive/ansible-sudo.svg)](https://github.com/weareinteractive/ansible-sudo)
 [![GitHub Stars](https://img.shields.io/github/stars/weareinteractive/ansible-sudo.svg)](https://github.com/weareinteractive/ansible-sudo)
 
-> `franklinkim.sudo` is an [Ansible](http://www.ansible.com) role which:
+> `weareinteractive.sudo` is an [Ansible](http://www.ansible.com) role which:
 >
 > * installs sudo
 > * configures sudo
+
+**Note:**
+
+> Since Ansible Galaxy supports [organization](https://www.ansible.com/blog/ansible-galaxy-2-release) now, this role has moved from `franklinkim.sudo` to `weareinteractive.sudo`!
 
 ## Installation
 
 Using `ansible-galaxy`:
 
 ```shell
-$ ansible-galaxy install franklinkim.sudo
+$ ansible-galaxy install weareinteractive.sudo
 ```
 
 Using `requirements.yml`:
 
 ```yaml
-- src: franklinkim.sudo
+- src: weareinteractive.sudo
 ```
 
 Using `git`:
 
 ```shell
-$ git clone https://github.com/weareinteractive/ansible-sudo.git franklinkim.sudo
+$ git clone https://github.com/weareinteractive/ansible-sudo.git weareinteractive.sudo
 ```
 
 ## Dependencies
 
-* Ansible >= 1.9
+* Ansible >= 2.4
 
 ## Variables
 
@@ -50,6 +54,10 @@ Here is a list of all the default variables for this role, which are also availa
 #    nopasswd: yes
 #  - name: '%group2'
 #    commands: '/bin/ls'
+#  - name: '%group3'
+#    commands:
+#      - /bin/ls
+#      - /bin/df
 #
 
 # package name (version)
@@ -60,6 +68,8 @@ sudo_users: []
 sudo_defaults: []
 # default sudoers file
 sudo_sudoers_file: ansible
+# delete other files in /etc/sudoers.d/
+purge_other_sudoers_files: no
 
 ```
 
@@ -74,7 +84,7 @@ This is an example playbook:
 - hosts: all
   become: yes
   roles:
-    - franklinkim.sudo
+    - weareinteractive.sudo
   vars:
     sudo_defaults:
       - defaults: env_reset
@@ -92,8 +102,14 @@ This is an example playbook:
       - name: '%group2'
         commands: '/bin/ls'
       - name: '%group3'
+        commands:
+          - '/usr/bin/ls'
+          - '/usr/bin/df'
+          - '/usr/bin/mailq'
+      - name: '%group4'
         users: 'user1,user2'
         groups: 'group1,group2'
+    purge_other_sudoers_files: no
 
 ```
 
